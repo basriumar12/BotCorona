@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:textColor="#151111"
+       android:id="@+id/tv_label_covid"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:text="@string/app_name"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@id/tv_label_covid"
+        android:id="@+id/rv_info"
+        android:layout_above="@+id/tv_label"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+    <TextView
+        android:id="@+id/tv_label"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:layout_margin="10dp"
+        android:layout_above="@id/parent_asking"
+        android:text="Enter Your Question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/parent_asking"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:background="@drawable/bg_box"
+            android:hint="CASES IN"
+            android:padding="5dp"
+            android:id="@+id/edt_info"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"/>
+
+
+        <Button
+            android:id="@+id/btn_ask"
+            android:layout_margin="10dp"
+            android:text="Ask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</RelativeLayout>
