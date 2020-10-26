@@ -34,9 +34,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Handler().postDelayed({
 
-        }, 100000)
 
         listInfo.add(
             DataAdapter(
@@ -85,81 +83,88 @@ class MainActivity : AppCompatActivity() {
         var dataglobal: Global? = null
 
         btn_ask.setOnClickListener {
-            var getData = edt_info.text.toString()
 
-            var filter = ""
-
-
-            getData.let {
-                filter = it.substring(it.length - 5)
-            }
-            listInfo.add(DataAdapter(getData, true))
-            adapter.notifyDataSetChanged()
-
-            if (filter.equals("TOTAL")) {
-                GlobalScope.launch {
-
-                    dataglobal = appDatabase?.characterDao()
-                        ?.getTotal()
-                    if (edt_info.text.toString().contains("CASES TOTAL")) {
-
-                        result = "Total Active Cases ${dataglobal?.totalConfirmed}"
-                    } else if (edt_info.text.toString().contains("DEATHS TOTAL")) {
-                        result = "Total Deaths ${dataglobal?.totalDeaths}"
-                    } else {
-
-                        result = "No data found"
-                    }
-
-                    if (dataglobal == null) {
-                        result = "No data found"
-                    }
-                }
-
+            if (edt_info.text.toString().isNullOrEmpty()) {
+                Toast.makeText(this, "Can't empty data", Toast.LENGTH_LONG).show()
             } else {
 
-                GlobalScope.launch {
-                    if (edt_info.text.toString().length > 3) {
+                var getData = edt_info.text.toString()
 
-                        getData.let {
+                var filter = ""
 
-                            dataCountry = appDatabase?.characterDao()
-                                ?.getDeaths(
-                                    it
-                                        .substring(edt_info.text.toString().length - 2)
-                                )
+
+                getData.let {
+                    filter = it.substring(it.length - 5)
+                }
+                listInfo.add(DataAdapter(getData, true))
+                adapter.notifyDataSetChanged()
+
+                if (filter.equals("TOTAL")) {
+                    GlobalScope.launch {
+
+                        dataglobal = appDatabase?.characterDao()
+                            ?.getTotal()
+                        if (edt_info.text.toString().contains("CASES TOTAL")) {
+
+                            result = "Total Active Cases ${dataglobal?.totalConfirmed}"
+                        } else if (edt_info.text.toString().contains("DEATHS TOTAL")) {
+                            result = "Total Deaths ${dataglobal?.totalDeaths}"
+                        } else {
+
+                            result = "No data found"
+                        }
+
+                        if (dataglobal == null) {
+                            result = "No data found"
+                        }
+                    }
+
+                } else {
+
+                    GlobalScope.launch {
+                        if (edt_info.text.toString().length > 3) {
+
+                            getData.let {
+
+                                dataCountry = appDatabase?.characterDao()
+                                    ?.getDeaths(
+                                        it
+                                            .substring(edt_info.text.toString().length - 2)
+                                    )
+                            }
+
+                        }
+
+                        if (dataCountry == null) {
+                            result = "No data found"
+                        }
+
+                        if (edt_info.text.toString().contains("CASES")) {
+
+                            result =
+                                "${dataCountry?.countryCode} Active Cases ${dataCountry?.totalConfirmed}"
+
+                        } else if (edt_info.text.toString().contains("DEATHS")) {
+                            result =
+                                "${dataCountry?.countryCode} Deaths ${dataCountry?.totalDeaths}"
+
+                        } else {
+                            result = " No Data Found"
                         }
 
                     }
 
-                    if (dataCountry == null) {
-                        result = "No data found"
-                    }
-
-                    if (edt_info.text.toString().contains("CASES")) {
-
-                        result =
-                            "${dataCountry?.countryCode} Active Cases ${dataCountry?.totalConfirmed}"
-
-                    } else if (edt_info.text.toString().contains("DEATHS")) {
-                        result = "${dataCountry?.countryCode} Deaths ${dataCountry?.totalDeaths}"
-
-                    } else {
-                        result = " No Data Found"
-                    }
 
                 }
 
 
+                listInfo.add(DataAdapter(result, false))
+                adapter.notifyDataSetChanged()
+                Toast.makeText(this@MainActivity, "data $result", Toast.LENGTH_SHORT).show()
+
+                edt_info.setText("")
+
             }
-
-
-            listInfo.add(DataAdapter(result, false))
-            adapter.notifyDataSetChanged()
-            Toast.makeText(this@MainActivity, "data $result", Toast.LENGTH_SHORT).show()
-
-            edt_info.setText("")
-
         }
 
 
