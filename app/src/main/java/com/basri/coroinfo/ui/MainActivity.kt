@@ -1,28 +1,20 @@
-package com.basri.coroinfo
+package com.basri.coroinfo.ui
 
-import android.app.ProgressDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bas.botinfo.data.entities.cor.Global
 import com.bas.botinfo.data.entities.cor.ResponseData
-import com.basri.coroinfo.api.ApiHelper
-import com.basri.coroinfo.api.MainRepository
+import com.basri.coroinfo.R
 import com.basri.coroinfo.database.AppDatabase
 import com.basri.coroinfo.entity.DataAdapter
 import com.basri.coroinfo.entity.DataCountry
-import com.basri.coroinfo.ui.Adapter
 import com.basri.newsapp.network.ApiRetrofit
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import okhttp3.Call
-import okhttp3.Callback
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
